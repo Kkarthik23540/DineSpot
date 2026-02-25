@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+
+    <TextView
+        android:id="@+id/successMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:text="Payment Successful! \ntable has been booked"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#4CAF50"
+        android:gravity="center"
+        android:paddingBottom="32dp" />
+
+
+    <Button
+        android:id="@+id/backToHomeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Home"
+        android:backgroundTint="#009688"
+        android:textColor="#FFFFFF"
+        android:padding="12dp" />
+
+
+    <Button
+        android:id="@+id/cancelPaymentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel Payment"
+android:layout_marginTop="20dp"
+        android:backgroundTint="#F44336"
+        android:textColor="#FFFFFF"
+        android:padding="12dp" />
+    <TextView
+        android:id="@+id/timerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time Left for cancel : 00:00"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/negative_button_color"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"/>
+
+
+</LinearLayout>

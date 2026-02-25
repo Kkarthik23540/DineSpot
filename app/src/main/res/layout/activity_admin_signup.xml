@@ -1,0 +1,100 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A2D4DE"
+    android:padding="16dp"
+android:gravity="center"
+    tools:context=".AdminSignupActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@mipmap/dine_spot"
+        android:contentDescription="Logo"
+
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin Sign-Up"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/etAdminSignupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:drawable/screen_background_light_transparent" />
+
+        <EditText
+            android:id="@+id/etAdminSignupPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone"
+            android:inputType="phone"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:drawable/screen_background_light_transparent" />
+
+        <EditText
+            android:id="@+id/etAdminSignupEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:drawable/screen_background_light_transparent" />
+
+        <EditText
+            android:id="@+id/etAdminSignupPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:drawable/screen_background_light_transparent" />
+
+        <EditText
+            android:id="@+id/etAdminSignupConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:layout_marginBottom="24dp"
+            android:background="@android:drawable/screen_background_light_transparent" />
+
+        <Button
+            android:id="@+id/btnAdminSignupSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:backgroundTint="#118D9D"
+            android:textColor="@android:color/white"
+            android:padding="12dp" />
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

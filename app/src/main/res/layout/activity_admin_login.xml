@@ -1,0 +1,95 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="#A2D4DE"
+    tools:context=".AdminLoginActivity">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@mipmap/dine_spot"
+        android:contentDescription="Logo"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="#064C57"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:shadowColor="#D0DDDE"
+        android:shadowDx="6"
+        android:shadowDy="20"
+        android:shadowRadius="4"/>
+
+    <EditText
+        android:id="@+id/etAdminEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=" Email"
+        android:inputType="textEmailAddress"
+        android:padding="8dp"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:drawableTint="#118D9D"
+        android:background="@android:drawable/screen_background_light_transparent"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/etAdminPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=" Password"
+        android:inputType="textPassword"
+        android:padding="8dp"
+        android:drawableLeft="@drawable/baseline_password_24"
+        android:drawableTint="#118D9D"
+        android:background="@android:drawable/screen_background_light_transparent"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btnAdminLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:backgroundTint="#118D9D"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="12dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Don't have an account? "
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/btnAdminSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textColor="#118D9D"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="6dp"
+    android:background="#EAF8FB"
+    android:clickable="true"
+    android:focusable="true">
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/restaurant_image"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_launcher_foreground" />
+        <ProgressBar
+            android:id="@+id/image_loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/restaurant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restaurant Name"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#118D9D"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:id="@+id/restaurant_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restaurant Address"
+                android:textSize="14sp"
+                android:textColor="#118D9D"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:id="@+id/restaurant_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating: 0.0"
+                android:textSize="15sp"
+                android:textColor="#118D9D" />
+
+            <TextView
+                android:id="@+id/restaurant_tables"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tables Available:0"
+                android:textSize="14sp"
+                android:textColor="#118D9D" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

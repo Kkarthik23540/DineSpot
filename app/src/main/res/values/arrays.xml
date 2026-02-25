@@ -1,0 +1,6 @@
+<resources>
+    <string-array name="sort_options">
+        <item>Old to New</item>
+        <item>New to Old</item>
+    </string-array>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DineSpot</string>
+
+        <string-array name="date_filter_options">
+            <item>Today</item>
+            <item>Yesterday</item>
+            <item>Specific Date</item>
+        </string-array>
+
+</resources>
+

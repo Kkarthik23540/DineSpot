@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:elevation="4dp"
+    android:layout_margin="8dp"
+    android:gravity="center_vertical"
+    android:background="@color/colorLightBackground"
+    >
+    <ImageView
+        android:id="@+id/foodImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_image_24"
+        android:contentDescription="Food Image"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/baseline_restaurant_menu_24"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="start">
+
+        <TextView
+            android:id="@+id/foodName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="food name"
+            android:textSize="18sp"
+            android:textColor="#118D9D"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/foodPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="price"
+            android:textSize="16sp"
+            android:textColor="#118D9D"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:textSize="14sp"
+        android:backgroundTint="#118D9D"
+        android:textColor="@android:color/white"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="4dp"/>
+</LinearLayout>

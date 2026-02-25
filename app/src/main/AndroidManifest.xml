@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <queries>
+        <package android:name="com.google.android.apps.nbu.paisa.user"/>
+        <package android:name="com.example.dinespot"/>
+        <intent>
+            <action android:name="android.intent.action.SEND"/>
+        </intent>
+    </queries>
+<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/dine_spot"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/dine_spot_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DineSpot"
+        tools:targetApi="31">
+        <meta-data android:name="com.google.geo.API_KEY"
+            android:value="AIzaSyBDpzsDL_6nIBZ4rsOxfELLtC_U187U268"/>
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <receiver android:name="com.razorpay.RzpTokenReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="rzp.device_token.share"/>
+            </intent-filter>
+        </receiver>
+
+
+        <activity android:name="com.razorpay.CheckoutActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@style/CheckoutTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <data android:host="rzp.io"
+                    android:scheme="io.rsp" />
+            </intent-filter>
+        </activity>
+
+        <!-- users -->
+
+        <activity android:name="SignUpActivity"/>
+        <activity android:name=".ForgotPasswordActivity"/>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".HomeActivity"/>
+        <activity android:name=".RestaurantsActivityMenu"/>
+        <activity android:name=".CartActivityMenu"/>
+        <activity android:name="ProfileActivityMenu"/>
+        <activity android:name=".RestaurantDetailsActivity"/>
+        <activity android:name=".OrderSummaryActivity"/>
+        <activity android:name=".PaymentSuccessActivity"/>
+
+        <!-- admin -->
+        <activity android:name=".AdminLoginActivity"/>
+        <activity android:name=".AdminSignupActivity"/>
+        <activity android:name=".AdminDashboardActivity"/>
+
+
+        <activity android:name=".BothLogin"/>
+
+
+    </application>
+
+</manifest>

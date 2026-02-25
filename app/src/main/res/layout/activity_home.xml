@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#118D9D"
+        app:title="DineSpot"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/userInitial"
+            android:layout_width="32dp"
+            android:layout_height="31dp"
+            android:layout_gravity="end|center_vertical"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:text=""
+            android:background="@drawable/circular_background"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
+    
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#D4E7EB"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp">
+
+                <EditText
+                    android:id="@+id/searchBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Search food items..."
+                    android:background="#ABAACACE"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"
+                    android:drawableStart="@android:drawable/ic_menu_search"
+                    android:drawableTint="#108085"
+                    android:inputType="textMultiLine"
+                    android:maxLines="2"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/tablesButton"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="No of Tables"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="#118D9D"
+                    android:textColor="@android:color/white" />
+
+                <Spinner
+                    android:id="@+id/ratingSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="0.9"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="#118D9D"
+                    android:popupBackground="#D4E7EB"
+                    android:textColor="#118D9D" />
+
+                <ImageButton
+                    android:id="@+id/sortButton"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="@drawable/baseline_sort_by_alpha_24"
+                    android:contentDescription="Sort Options"
+
+                     />
+            </LinearLayout>
+            <ProgressBar
+                android:id="@+id/loadingProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/noResultsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No restaurants found\nTry for available restaurants"
+                android:gravity="center"
+                android:textColor="#118D9D"
+                android:visibility="gone"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:paddingTop="10dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewRestaurants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:labelVisibilityMode="labeled"
+        android:background="#118D9D"
+        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/white"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconSize="32dp"/>
+</LinearLayout>

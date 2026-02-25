@@ -1,0 +1,52 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="#A2D4DE"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@mipmap/dine_spot"
+        android:contentDescription="Logo"
+
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
+
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to DineSpot"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingTop="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnUserLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User"
+        android:textSize="18dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#118D9D"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnAdminLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Admin"
+        android:textSize="18dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#118D9D" />
+</LinearLayout>

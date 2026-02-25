@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#118D9D"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Profile"
+        app:titleTextColor="@android:color/white"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#DAE9EB"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_user_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="   Personal Information"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:textColor="#118D9D"
+                    android:drawableStart="@drawable/baseline_account_circle_24"
+                    android:drawableTint="#118D9D"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/et_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:hint="    User Name"
+                    android:enabled="false"
+                    android:paddingStart="20dp"
+                    android:textColor="#118D9D"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:drawable/divider_horizontal_dim_dark" />
+
+                <EditText
+                    android:id="@+id/et_user_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:hint="    Email"
+                    android:enabled="false"
+                    android:textColor="#118D9D"
+                    android:paddingStart="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:drawable/divider_horizontal_dim_dark" />
+
+                <EditText
+                    android:id="@+id/et_user_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:hint="    Phone Number"
+                    android:enabled="false"
+                    android:textColor="#118D9D"
+                    android:paddingStart="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@android:drawable/divider_horizontal_dim_dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:background="#DAE9EB"
+                >
+
+                <TextView
+                    android:id="@+id/tv_order_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_shopping_cart_24"
+                    android:drawableTint="#118D9D"
+                    android:text="   My Orders"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:textColor="#118D9D"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:id="@+id/tv_no_orders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No orders are available."
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvOrderHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:scrollbars="vertical"
+                    android:padding="3dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="#DAE9EB"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_app_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableStart="@drawable/baseline_perm_device_information_24"
+                    android:drawableTint="#118D9D"
+                    android:text="   App Information"
+                    android:textColor="#118D9D"
+                    android:textSize="19dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_version_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="#118D9D"
+
+                    android:text="      Version: 1.0.0"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_about_app"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:baselineAligned="false"
+                    android:textColor="#118D9D"
+
+                    android:text="      DineSpot helps you easily find and book tables\n      and fav food at your nearby restaurants,simple."
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:background="#DAE9EB"
+                >
+
+                <TextView
+                    android:id="@+id/tv_privacy_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="   Privacy Settings"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:textColor="#118D9D"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableStart="@drawable/baseline_privacy_tip_24"
+                    android:drawableTint="#118D9D" />
+
+
+
+                <TextView
+                    android:id="@+id/tv_terms_conditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="          Read Terms and Conditions"
+                    android:textColor="#118D9D"
+                    android:layout_marginBottom="13dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:background="#DAE9EB"
+                >
+
+                <TextView
+                    android:id="@+id/tv_about_us"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_contact_support_24"
+                    android:text="   About Us"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:textColor="#118D9D"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_need_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="          Need Help? Contact us for assistance."
+                    android:textColor="#118D9D"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_contact_us"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="          Contact Us: dinespot15@gmail.com"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="#118D9D"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:background="#DAE9EB">
+
+                <TextView
+                    android:id="@+id/tv_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_feedback_24"
+                    android:drawableTint="#118D9D"
+                    android:text="   Feedback"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:textColor="#118D9D"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/et_feedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:hint="Write your feedback here..."
+                    android:background="@android:drawable/screen_background_light_transparent"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:textColor="#118D9D"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:maxLines="5"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+
+
+                <Button
+                    android:id="@+id/btn_submit_feedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#118D9D"
+                    android:text="Submit Feedback"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/black"
+                    android:text="Logout"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

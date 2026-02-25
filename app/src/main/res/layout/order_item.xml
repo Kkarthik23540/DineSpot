@@ -1,0 +1,52 @@
+<!-- res/layout/item_food.xml -->
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="#FFFFFF"
+    android:elevation="4dp"
+    android:layout_marginBottom="8dp"
+    android:stretchColumns="1">
+
+    <TableRow>
+        <ImageView
+            android:id="@+id/foodImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_restaurant_menu_24"
+        android:layout_marginEnd="16dp"
+
+        android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/foodName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginEnd="4dp"
+            />
+
+        <TextView
+            android:id="@+id/foodQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:layout_marginEnd="40dp"/>
+
+        <TextView
+            android:id="@+id/foodPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:textSize="14sp"
+            android:textColor="#FF5722"
+            android:paddingRight="8dp"/>
+    </TableRow>
+
+
+</TableLayout>

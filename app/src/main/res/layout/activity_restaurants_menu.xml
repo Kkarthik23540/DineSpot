@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#D4E7EB"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#118D9D"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="#D4E7EB"
+        >
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:hint=" Search Restaurants..."
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawableTint="#108085"
+            android:background="#ABAACACE"
+            android:imeOptions="actionSearch"
+            android:inputType="textMultiLine"
+            android:maxLines="2"
+            android:scrollbars="vertical"
+            android:overScrollMode="always"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/restaurant_details_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="2dp" />
+    </ScrollView>
+</LinearLayout>
