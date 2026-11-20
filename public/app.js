@@ -1,5 +1,5 @@
 /**
- * DineSpot Web Application - Dual Portal Engine (Diner & Admin)
+ * DineSpot Web Application - Matching Android App Design & Logic
  */
 
 // Firebase Configuration from project google-services.json
@@ -27,9 +27,8 @@ let activeRestaurant = null;
 let restaurants = [];
 let foodItems = [];
 let bookings = [];
-let chats = [];
 
-// Sample Mock Initial Data for Firestore when fresh
+// Initial Seed Data
 const sampleRestaurants = [
   {
     name: "La Bella Italia",
@@ -81,7 +80,6 @@ const sampleFoodItems = [
   { name: "Tiramisu Dessert", price: 199, category: "Desserts", veg: true, imageUrl: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=400&q=80" }
 ];
 
-// Initialize Web App
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
   listenToAuth();
@@ -89,62 +87,55 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchBookings();
 });
 
-// Event Listeners setup
 function setupEventListeners() {
   document.getElementById('roleToggleBtn')?.addEventListener('click', toggleRole);
-  document.getElementById('cartNavBtn')?.addEventListener('click', toggleCartDrawer);
-  document.getElementById('closeCartBtn')?.addEventListener('click', toggleCartDrawer);
-  document.getElementById('chatNavBtn')?.addEventListener('click', openChatModal);
-  document.getElementById('themeToggleBtn')?.addEventListener('click', toggleTheme);
   document.getElementById('searchInput')?.addEventListener('input', handleSearch);
   document.getElementById('checkoutBtn')?.addEventListener('click', initiateCheckout);
 }
 
-// Auth State Monitor
 function listenToAuth() {
   auth.onAuthStateChanged(user => {
     currentUser = user;
     const authBtn = document.getElementById('authNavBtn');
-    if (user) {
-      authBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> Logout (${user.email.split('@')[0]})`;
-      authBtn.onclick = () => auth.signOut();
-    } else {
-      authBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> Login / Sign Up`;
-      authBtn.onclick = () => openAuthModal();
+    if (authBtn) {
+      if (user) {
+        authBtn.querySelector('span').innerText = user.email.split('@')[0];
+      } else {
+        authBtn.querySelector('span').innerText = 'Account';
+      }
     }
   });
 }
 
-// Toggle Role (User vs Admin)
 function toggleRole() {
   currentRole = currentRole === 'user' ? 'admin' : 'user';
   const roleBtn = document.getElementById('roleToggleBtn');
   const userPortal = document.getElementById('userPortal');
   const adminPortal = document.getElementById('adminPortal');
+  const userFilter = document.getElementById('userFilterBar');
+  const adminFilter = document.getElementById('adminFilterBar');
 
   if (currentRole === 'admin') {
     roleBtn.innerHTML = `<i class="fas fa-user-shield"></i> Switch to Diner Portal`;
-    roleBtn.style.borderColor = '#FF5722';
-    roleBtn.style.color = '#FF5722';
     userPortal.style.display = 'none';
     adminPortal.style.display = 'block';
+    userFilter.style.display = 'none';
+    adminFilter.style.display = 'flex';
     renderAdminDashboard();
   } else {
     roleBtn.innerHTML = `<i class="fas fa-store"></i> Switch to Admin Portal`;
-    roleBtn.style.borderColor = '#26A69A';
-    roleBtn.style.color = '#26A69A';
     userPortal.style.display = 'block';
     adminPortal.style.display = 'none';
-    renderUserPortal();
+    userFilter.style.display = 'flex';
+    adminFilter.style.display = 'none';
+    renderRestaurants(restaurants);
   }
 }
 
-// Fetch Restaurants from Firestore
 async function fetchRestaurants() {
   try {
     const snapshot = await db.collection('restaurants').get();
     if (snapshot.empty) {
-      // Seed Firestore with initial sample data if empty
       for (const res of sampleRestaurants) {
         const docRef = await db.collection('restaurants').add(res);
         restaurants.push({ id: docRef.id, ...res });
@@ -153,15 +144,15 @@ async function fetchRestaurants() {
       restaurants = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
     renderRestaurants(restaurants);
+    renderNearbyRestaurants(restaurants);
     fetchFoodItems();
   } catch (e) {
-    console.error("Firestore error:", e);
     restaurants = sampleRestaurants.map((r, i) => ({ id: `res_${i}`, ...r }));
     renderRestaurants(restaurants);
+    renderNearbyRestaurants(restaurants);
   }
 }
 
-// Fetch Food Items
 async function fetchFoodItems() {
   try {
     const snapshot = await db.collection('food_items').get();
@@ -179,7 +170,6 @@ async function fetchFoodItems() {
   }
 }
 
-// Fetch Bookings
 async function fetchBookings() {
   try {
     const snapshot = await db.collection('bookings').get();
@@ -189,13 +179,12 @@ async function fetchBookings() {
   }
 }
 
-// Render User Restaurants Grid
 function renderRestaurants(list) {
   const container = document.getElementById('restaurantGrid');
   if (!container) return;
 
   if (list.length === 0) {
-    container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No restaurants found.</p>`;
+    container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">No restaurants found.</p>`;
     return;
   }
 
@@ -203,27 +192,41 @@ function renderRestaurants(list) {
     <div class="card" onclick="openRestaurantDetails('${r.id}')">
       <div class="card-img-wrapper">
         <img src="${r.imageUrl}" class="card-img" alt="${r.name}">
-        <span class="badge-tag">${r.category || 'Multi-Cuisine'}</span>
-        <button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('${r.id}')">
-          <i class="far fa-heart"></i>
-        </button>
+        <span class="status-badge">${r.status || 'Open'}</span>
+        <span class="rating-badge"><i class="fas fa-star"></i> ${r.rating || 4.8}</span>
       </div>
       <div class="card-content">
         <div class="card-title">${r.name}</div>
-        <div class="card-meta">
-          <span class="rating-badge"><i class="fas fa-star"></i> ${r.rating || 4.5}</span>
-          <span><i class="far fa-clock"></i> ${r.openingTime || '11 AM'} - ${r.closingTime || '11 PM'}</span>
+        <div class="card-subtitle"><i class="fas fa-map-marker-alt"></i> ${r.address}</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+          <i class="far fa-clock"></i> ${r.openingTime || '11:00 AM'} - ${r.closingTime || '11:00 PM'}
         </div>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;"><i class="fas fa-map-marker-alt"></i> ${r.address}</p>
-        <button class="btn btn-primary btn-sm btn-block">Reserve Table & View Menu</button>
+        <button class="btn btn-outline btn-block">Reserve Table & View Menu</button>
       </div>
     </div>
   `).join('');
 }
 
-// Category Filter Click
+function renderNearbyRestaurants(list) {
+  const container = document.getElementById('nearbyGrid');
+  if (!container) return;
+
+  container.innerHTML = list.slice(0, 3).map(r => `
+    <div class="card" style="border-radius: 16px;" onclick="openRestaurantDetails('${r.id}')">
+      <div class="card-img-wrapper" style="height: 120px;">
+        <img src="${r.imageUrl}" class="card-img" alt="${r.name}">
+        <span class="rating-badge" style="bottom: 8px; right: 8px;"><i class="fas fa-star"></i> ${r.rating || 4.8}</span>
+      </div>
+      <div class="card-content" style="padding: 0.8rem;">
+        <div class="card-title" style="font-size: 0.95rem;">${r.name}</div>
+        <div class="card-subtitle" style="font-size: 0.75rem; margin-bottom: 0;"><i class="fas fa-location-arrow" style="color: var(--primary);"></i> 1.2 km away</div>
+      </div>
+    </div>
+  `).join('');
+}
+
 function filterCategory(cat, element) {
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('#userFilterBar .chip').forEach(c => c.classList.remove('active'));
   element.classList.add('active');
 
   if (cat === 'All') {
@@ -234,7 +237,6 @@ function filterCategory(cat, element) {
   }
 }
 
-// Handle Search
 function handleSearch(e) {
   const query = e.target.value.toLowerCase();
   const filtered = restaurants.filter(r =>
@@ -245,7 +247,6 @@ function handleSearch(e) {
   renderRestaurants(filtered);
 }
 
-// Open Restaurant Details Modal
 function openRestaurantDetails(resId) {
   activeRestaurant = restaurants.find(r => r.id === resId);
   if (!activeRestaurant) return;
@@ -258,15 +259,15 @@ function openRestaurantDetails(resId) {
 
   const menuContainer = document.getElementById('modalMenuGrid');
   menuContainer.innerHTML = items.map(item => `
-    <div class="cart-item">
-      <div style="display: flex; gap: 1rem; align-items: center;">
-        <img src="${item.imageUrl}" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--divider);">
+      <div style="display: flex; gap: 0.8rem; align-items: center;">
+        <img src="${item.imageUrl}" style="width: 50px; height: 50px; border-radius: 10px; object-fit: cover;">
         <div>
-          <div style="font-weight: 600;">${item.name} ${item.veg ? '🟢' : '🔴'}</div>
-          <div style="color: var(--primary); font-weight: 700;">₹${item.price}</div>
+          <div style="font-weight: 700; font-size: 0.9rem;">${item.name} ${item.veg ? '🟢' : '🔴'}</div>
+          <div style="color: var(--primary); font-weight: 700; font-size: 0.85rem;">₹${item.price}</div>
         </div>
       </div>
-      <button class="btn btn-primary btn-sm" onclick="addToCart('${item.id}')">+ Add</button>
+      <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="addToCart('${item.id}')">+ Add</button>
     </div>
   `).join('');
 
@@ -277,7 +278,6 @@ function closeModal(modalId) {
   document.getElementById(modalId).classList.remove('active');
 }
 
-// Cart System
 function addToCart(foodId) {
   const item = foodItems.find(f => f.id === foodId);
   if (!item) return;
@@ -295,10 +295,7 @@ function addToCart(foodId) {
 
 function updateCartUI() {
   const cartList = document.getElementById('cartItemsList');
-  const countBadge = document.getElementById('cartCount');
-
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  countBadge.innerText = totalItems;
+  if (!cartList) return;
 
   if (cart.length === 0) {
     cartList.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Your cart is empty.</p>`;
@@ -308,21 +305,21 @@ function updateCartUI() {
   }
 
   cartList.innerHTML = cart.map(item => `
-    <div class="cart-item">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--divider);">
       <div>
-        <div style="font-weight: 600;">${item.name}</div>
+        <div style="font-weight: 700;">${item.name}</div>
         <div style="color: var(--primary); font-weight: 700;">₹${item.price * item.quantity}</div>
       </div>
       <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <button class="btn btn-secondary btn-sm" onclick="changeQuantity('${item.id}', -1)">-</button>
-        <span>${item.quantity}</span>
-        <button class="btn btn-secondary btn-sm" onclick="changeQuantity('${item.id}', 1)">+</button>
+        <button class="btn btn-outline" style="padding: 0.2rem 0.6rem;" onclick="changeQuantity('${item.id}', -1)">-</button>
+        <span style="font-weight: 700;">${item.quantity}</span>
+        <button class="btn btn-outline" style="padding: 0.2rem 0.6rem;" onclick="changeQuantity('${item.id}', 1)">+</button>
       </div>
     </div>
   `).join('');
 
   const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-  const total = subtotal + 40; // ₹40 delivery/taxes
+  const total = subtotal + 40;
 
   document.getElementById('cartSubtotal').innerText = `₹${subtotal}`;
   document.getElementById('cartTotal').innerText = `₹${total}`;
@@ -348,7 +345,6 @@ function toggleCartDrawer(forceOpen) {
   }
 }
 
-// Razorpay Payment Integration
 function initiateCheckout() {
   if (cart.length === 0) {
     alert("Cart is empty!");
@@ -356,14 +352,14 @@ function initiateCheckout() {
   }
 
   const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-  const totalAmount = (subtotal + 40) * 100; // Razorpay expects amount in paise
+  const totalAmount = (subtotal + 40) * 100;
 
   const options = {
-    key: "rzp_test_THNrx21lyjVEE6", // Test Razorpay Key ID
+    key: "rzp_test_THNrx21lyjVEE6",
     amount: totalAmount,
     currency: "INR",
     name: "DineSpot Order",
-    description: "Food Order & Table Reservation Payment",
+    description: "Table Reservation & Food Payment",
     image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=100&q=80",
     handler: function (response) {
       alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
@@ -375,7 +371,7 @@ function initiateCheckout() {
       contact: "9876543210"
     },
     theme: {
-      color: "#FF5722"
+      color: "#118D9D"
     }
   };
 
@@ -383,7 +379,6 @@ function initiateCheckout() {
   rzp.open();
 }
 
-// Save Order/Booking to Firestore
 async function saveOrderToFirestore(paymentId) {
   const newBooking = {
     restaurantName: activeRestaurant ? activeRestaurant.name : "DineSpot Partner",
@@ -395,7 +390,6 @@ async function saveOrderToFirestore(paymentId) {
     timeSlot: "07:30 PM",
     tableType: "4 Seater",
     status: "Accepted",
-    orderStatus: "Preparing",
     paymentId: paymentId,
     orderedItems: cart.map(i => ({ name: i.name, price: i.price, quantity: i.quantity }))
   };
@@ -406,24 +400,23 @@ async function saveOrderToFirestore(paymentId) {
     cart = [];
     updateCartUI();
     toggleCartDrawer(false);
-    alert("Booking & Order Confirmed!");
+    alert("Table Reservation & Food Order Confirmed!");
   } catch (e) {
     console.error("Error saving booking:", e);
   }
 }
 
-// Admin Portal Engine
 function renderAdminDashboard() {
-  document.getElementById('adminTotalRevenue').innerText = `₹${(bookings.length * 850).toLocaleString()}`;
-  document.getElementById('adminActiveBookings').innerText = bookings.length;
-  document.getElementById('adminTotalRestaurants').innerText = restaurants.length;
+  document.getElementById('adminTotalCount').innerText = restaurants.length;
+  document.getElementById('adminOpenCount').innerText = restaurants.length;
+  document.getElementById('adminFullCount').innerText = "0";
+  document.getElementById('adminClosedCount').innerText = "0";
 
   renderFloorPlanGrid();
   renderAdminBookingsList();
   renderAnalyticsChart();
 }
 
-// Render Table Floor Plan
 function renderFloorPlanGrid() {
   const floorGrid = document.getElementById('adminFloorGrid');
   if (!floorGrid) return;
@@ -434,16 +427,14 @@ function renderFloorPlanGrid() {
     { num: 3, type: '4 Seater', status: 'occupied' },
     { num: 4, type: '6 Seater', status: 'available' },
     { num: 5, type: '2 Seater', status: 'reserved' },
-    { num: 6, type: '10 Seater', status: 'available' },
-    { num: 7, type: '4 Seater', status: 'occupied' },
-    { num: 8, type: '4 Seater', status: 'available' }
+    { num: 6, type: '10 Seater', status: 'available' }
   ];
 
   floorGrid.innerHTML = tables.map(t => `
     <div class="table-node ${t.status}" onclick="toggleTableStatus(this)">
-      <div style="font-weight: 700; font-size: 1.1rem;">Table ${t.num}</div>
-      <div style="font-size: 0.8rem; margin: 0.3rem 0;">${t.type}</div>
-      <span class="badge-tag" style="position: static; text-transform: capitalize;">${t.status}</span>
+      <div style="font-weight: 800; font-size: 1.1rem;">Table ${t.num}</div>
+      <div style="font-size: 0.75rem; margin: 0.2rem 0;">${t.type}</div>
+      <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">${t.status}</span>
     </div>
   `).join('');
 }
@@ -451,41 +442,39 @@ function renderFloorPlanGrid() {
 function toggleTableStatus(el) {
   if (el.classList.contains('available')) {
     el.className = 'table-node reserved';
-    el.querySelector('.badge-tag').innerText = 'reserved';
+    el.querySelector('span').innerText = 'reserved';
   } else if (el.classList.contains('reserved')) {
     el.className = 'table-node occupied';
-    el.querySelector('.badge-tag').innerText = 'occupied';
+    el.querySelector('span').innerText = 'occupied';
   } else {
     el.className = 'table-node available';
-    el.querySelector('.badge-tag').innerText = 'available';
+    el.querySelector('span').innerText = 'available';
   }
 }
 
-// Render Bookings in Admin
 function renderAdminBookingsList() {
   const container = document.getElementById('adminBookingsTable');
   if (!container) return;
 
   if (bookings.length === 0) {
-    container.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No active reservations.</td></tr>`;
+    container.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1rem;">No recent requests.</td></tr>`;
     return;
   }
 
   container.innerHTML = bookings.map(b => `
-    <tr>
-      <td>${b.userName || 'Diner'}</td>
-      <td>${b.restaurantName || 'DineSpot'}</td>
-      <td>${b.dateTime || 'Today'} (${b.timeSlot || '7 PM'})</td>
-      <td>${b.tableType || '4-Seater'}</td>
-      <td><span class="badge-tag" style="position: static; background: var(--success);">${b.status || 'Accepted'}</span></td>
-      <td>
-        <button class="btn btn-secondary btn-sm" onclick="updateBookingStatus('${b.id}', 'Completed')">Complete</button>
+    <tr style="border-bottom: 1px solid var(--divider);">
+      <td style="padding: 0.8rem; font-weight: 600;">${b.userName || 'Diner'}</td>
+      <td style="padding: 0.8rem;">${b.restaurantName || 'DineSpot'}</td>
+      <td style="padding: 0.8rem;">${b.dateTime || 'Today'} (${b.timeSlot || '7 PM'})</td>
+      <td style="padding: 0.8rem;">${b.tableType || '4-Seater'}</td>
+      <td style="padding: 0.8rem;"><span style="color: var(--success); font-weight: 700;">${b.status || 'Accepted'}</span></td>
+      <td style="padding: 0.8rem;">
+        <button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="alert('Completed')">Done</button>
       </td>
     </tr>
   `).join('');
 }
 
-// Render Analytics Chart
 function renderAnalyticsChart() {
   const ctx = document.getElementById('analyticsChart')?.getContext('2d');
   if (!ctx) return;
@@ -499,10 +488,10 @@ function renderAnalyticsChart() {
     data: {
       labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       datasets: [{
-        label: 'Weekly Revenue (₹)',
-        data: [12000, 19000, 15000, 24000, 32000, 48000, 52000],
-        borderColor: '#FF5722',
-        backgroundColor: 'rgba(255, 87, 34, 0.1)',
+        label: 'Revenue Trends (₹)',
+        data: [15000, 22000, 18000, 29000, 35000, 52000, 58000],
+        borderColor: '#118D9D',
+        backgroundColor: 'rgba(17, 141, 157, 0.1)',
         fill: true,
         tension: 0.4
       }]
@@ -516,7 +505,15 @@ function renderAnalyticsChart() {
   });
 }
 
-// Live Chat System
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function switchNavTab(tab) {
+  document.querySelectorAll('.bottom-nav .nav-tab').forEach(t => t.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
 function openChatModal() {
   document.getElementById('chatModal').classList.add('active');
   listenToLiveChat();
@@ -530,13 +527,13 @@ function listenToLiveChat() {
     const data = snapshot.val();
     const chatContainer = document.getElementById('chatMessages');
     if (!data) {
-      chatContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted);">Start conversation with support...</p>`;
+      chatContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 1rem;">Send a message to support...</p>`;
       return;
     }
 
     const messages = Object.values(data);
     chatContainer.innerHTML = messages.map(m => `
-      <div class="chat-bubble ${m.senderId === userId ? 'sent' : 'received'}">
+      <div style="align-self: ${m.senderId === userId ? 'flex-end' : 'flex-start'}; background: ${m.senderId === userId ? 'var(--primary)' : 'var(--divider)'}; color: ${m.senderId === userId ? 'white' : 'var(--text)'}; padding: 0.6rem 1rem; border-radius: 12px; max-width: 80%; font-size: 0.85rem;">
         ${m.message}
       </div>
     `).join('');
@@ -561,19 +558,17 @@ function sendChatMessage() {
   input.value = '';
 }
 
-// Theme Toggle
 function toggleTheme() {
   const currentTheme = document.body.getAttribute('data-theme');
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   document.body.setAttribute('data-theme', newTheme);
 }
 
-// Auth Modal
 function openAuthModal() {
-  const email = prompt("Enter your email to Login/Sign Up:");
+  const email = prompt("Enter email to Login/Sign Up:");
   if (email) {
     auth.signInWithEmailAndPassword(email, "password123").catch(() => {
-      auth.createUserWithEmailAndPassword(email, "password123").then(() => alert("Signed up successfully!"));
+      auth.createUserWithEmailAndPassword(email, "password123").then(() => alert("Signed up!"));
     });
   }
 }
