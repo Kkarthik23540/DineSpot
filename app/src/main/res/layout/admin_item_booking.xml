@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/divider"
+    app:strokeWidth="0.5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvRestaurantName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/btnDelete"
+                android:text="The Grand Dine"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Delete"
+                android:src="@drawable/baseline_delete_outline_24"
+                app:tint="@color/colorError" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/baseline_account_circle_24"
+                app:tint="@color/textSecondary" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="John Doe"
+                android:textColor="@color/textPrimary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/baseline_location_on_24"
+                app:tint="@color/textSecondary" />
+
+            <TextView
+                android:id="@+id/tvDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Jan 20, 2024"
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="3dp"
+                android:layout_marginHorizontal="6dp"
+                android:background="@drawable/circle_white_bg"
+                android:backgroundTint="@color/divider" />
+
+            <TextView
+                android:id="@+id/tvTimeSlot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="07:00 PM"
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="20dp"
+            android:text="+91 9876543210"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvSpecialRequests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="20dp"
+            android:text="Notes: No onions"
+            android:textColor="@color/colorAccent"
+            android:textSize="11sp"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvOrderStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/fast_filling_bg"
+            android:backgroundTint="@color/colorPrimaryLight"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:text="Order: Preparing"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvOrderedItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="20dp"
+            android:background="#F9F9F9"
+            android:padding="8dp"
+            android:text="Ordered Items: ..."
+            android:textColor="@color/textPrimary"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PENDING"
+                android:textColor="@color/colorPrimary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/layoutActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnReject"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:minHeight="0dp"
+                    android:text="Reject"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorError"
+                    android:textSize="11sp"
+                    app:cornerRadius="6dp"
+                    app:strokeColor="@color/colorError" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAccept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/colorSuccess"
+                    android:minHeight="0dp"
+                    android:text="Accept"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    app:cornerRadius="6dp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnComplete"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:minHeight="0dp"
+                android:text="Release Table"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:visibility="gone"
+                app:cornerRadius="6dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

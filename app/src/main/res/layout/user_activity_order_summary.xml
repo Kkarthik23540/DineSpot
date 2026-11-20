@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="Order Summary"
+            app:titleTextColor="@color/textPrimary" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/order_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:paddingBottom="120dp">
+
+                    <!-- 1. Restaurant Info Section -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:background="@color/surface">
+
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:src="@drawable/baseline_restaurant_menu_24"
+                                app:tint="@color/colorPrimary" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/restaurantName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Restaurant Name"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Dine-in Reservation Order"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 2. Order Items Section -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginStart="4dp"
+                        android:text="Review Items"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="1dp"
+                        app:strokeColor="@color/divider"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:background="@color/surface">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/orderItemsRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:nestedScrollingEnabled="false" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginVertical="16dp"
+                                android:background="@color/divider" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Item Total"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/totalCostText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="₹0"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 3. Billing Section -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="1dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp"
+                            android:background="#FAFAFA">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Customer Details"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textAllCaps="true" />
+
+                            <TextView
+                                android:id="@+id/userName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:drawableStart="@drawable/baseline_account_circle_24"
+                                android:drawablePadding="12dp"
+                                app:drawableTint="@color/colorPrimary"
+                                android:text="Name"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/userPhone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:drawableStart="@drawable/baseline_call_24"
+                                android:drawablePadding="12dp"
+                                app:drawableTint="@color/colorPrimary"
+                                android:text="Phone"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:gravity="center"
+                        android:text="Secure Payment processed by Razorpay"
+                        android:textColor="@color/textTertiary"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/order_skeleton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:shimmer_auto_start="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Info Card Skeleton -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+                        <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="#F5F5F5" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- List Skeleton -->
+                    <View android:layout_width="140dp" android:layout_height="22dp" android:layout_marginTop="24dp" android:background="#EEEEEE" />
+                    <View android:layout_width="match_parent" android:layout_height="150dp" android:layout_marginTop="12dp" android:background="#F5F5F5" />
+
+                    <!-- Billing Skeleton -->
+                    <View android:layout_width="match_parent" android:layout_height="120dp" android:layout_marginTop="20dp" android:background="#EEEEEE" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottom_button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="16dp"
+        app:strokeWidth="0dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/paymentButton"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Confirm and Pay"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="16dp" />
+
+            <ProgressBar
+                android:id="@+id/paymentProgressBar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:elevation="18dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone" />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

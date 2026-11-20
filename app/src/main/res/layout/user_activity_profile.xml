@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:elevation="0dp"
+        app:liftOnScroll="false">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="My Profile"
+            app:titleTextColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_theme_toggle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_sun"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 1. SCROLLING HEADER SECTION (Teal Theme) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="32dp"
+                    android:paddingBottom="40dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="50dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/white"
+                        app:strokeWidth="2dp">
+
+                        <ImageView
+                            android:id="@+id/iv_profile_pic"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/baseline_account_circle_24"
+                            app:tint="@color/colorPrimary" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tv_display_name_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="User Name"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_display_email_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="user@example.com"
+                        android:textColor="#B2DFDB"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_user_id_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/rounded_status_bg"
+                        android:backgroundTint="@color/colorPrimaryLight"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="4dp"
+                        android:text="DS-USER-01"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- 2. PERSONAL INFORMATION & SECURITY -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="ACCOUNT &amp; SECURITY"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <!-- Name Field -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="16dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/baseline_account_circle_24"
+                                    app:tint="@color/colorPrimary" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Full Name"
+                                        android:textColor="@color/textSecondary"
+                                        android:textSize="11sp" />
+
+                                    <EditText
+                                        android:id="@+id/et_user_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:enabled="false"
+                                        android:inputType="textPersonName"
+                                        android:textColor="@color/textPrimary"
+                                        android:textSize="15sp" />
+                                </LinearLayout>
+
+                                <ImageButton
+                                    android:id="@+id/btn_edit_name"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:src="@drawable/baseline_edit_24"
+                                    app:tint="@color/textSecondary" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <!-- Phone Field -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="16dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/baseline_call_24"
+                                    app:tint="@color/colorPrimary" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Mobile Number"
+                                        android:textColor="@color/textSecondary"
+                                        android:textSize="11sp" />
+
+                                    <EditText
+                                        android:id="@+id/et_user_phone"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:enabled="false"
+                                        android:inputType="phone"
+                                        android:textColor="@color/textPrimary"
+                                        android:textSize="15sp" />
+                                </LinearLayout>
+
+                                <ImageButton
+                                    android:id="@+id/btn_edit_phone"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:src="@drawable/baseline_edit_24"
+                                    app:tint="@color/textSecondary" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                        <!-- Joined Date (Read Only) -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/baseline_schedule_24"
+                                app:tint="@color/colorPrimary"
+                                android:contentDescription="Joined Icon" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Joined Since"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_joined_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Not Available"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:background="@color/divider" />
+
+                        <!-- Email Update -->
+                        <TextView
+                            android:id="@+id/tv_change_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:drawableStart="@drawable/baseline_email_24"
+                            android:drawablePadding="16dp"
+                            app:drawableTint="@color/colorPrimary"
+                            android:focusable="true"
+                            android:padding="16dp"
+                            android:text="Update Email Address"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:background="@color/divider" />
+
+                        <!-- Password Update -->
+                        <TextView
+                            android:id="@+id/tv_change_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:drawableStart="@drawable/baseline_password_24"
+                            android:drawablePadding="16dp"
+                            app:drawableTint="@color/colorPrimary"
+                            android:focusable="true"
+                            android:padding="16dp"
+                            android:text="Change Password"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="14sp" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 3. DEVICE PERMISSIONS -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="DEVICE PERMISSIONS"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switch_location"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp"
+                                android:text="Location Services"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="14sp"
+                                android:drawableStart="@drawable/baseline_location_on_24"
+                                android:drawablePadding="16dp"
+                                app:drawableTint="@color/colorPrimary"
+                                app:thumbTint="@color/colorPrimary" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switch_notifications"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp"
+                                android:text="Push Notifications"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="14sp"
+                                android:drawableStart="@drawable/baseline_notifications_24"
+                                android:drawablePadding="16dp"
+                                app:drawableTint="@color/colorPrimary"
+                                app:thumbTint="@color/colorPrimary" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switch_camera"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp"
+                                android:text="Camera Access"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="14sp"
+                                android:drawableStart="@drawable/baseline_camera_alt_24"
+                                android:drawablePadding="16dp"
+                                app:drawableTint="@color/colorPrimary"
+                                app:thumbTint="@color/colorPrimary" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 4. APP POLICIES -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="APP POLICIES"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/layout_terms_expand"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:padding="16dp">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:src="@drawable/baseline_privacy_tip_24"
+                                        app:tint="@color/colorPrimary" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="16dp"
+                                        android:layout_weight="1"
+                                        android:text="Terms &amp; Conditions"
+                                        android:textColor="@color/textPrimary" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_terms_arrow"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:src="@drawable/ic_chevron_down"
+                                        android:rotation="0"
+                                        app:tint="@color/textSecondary" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tv_terms_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="16dp"
+                                    android:paddingBottom="16dp"
+                                    android:text="1. All bookings are subject to availability.\n2. Users must arrive on time for their slots.\n3. Orders once paid are non-refundable.\n4. Account security is the user's responsibility."
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="13sp"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <TextView
+                                android:id="@+id/tv_booking_history"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_history_24"
+                                android:drawablePadding="16dp"
+                                app:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="Booking History"
+                                android:textColor="@color/textPrimary" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 5. HELP & SUPPORT -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="HELP &amp; SUPPORT"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_call_us"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_call_24"
+                                android:drawablePadding="16dp"
+                                app:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="Call DineSpot Support"
+                                android:textColor="@color/textPrimary" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <TextView
+                                android:id="@+id/tv_support_chat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_contact_support_24"
+                                android:drawablePadding="16dp"
+                                app:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="Live Support Chat"
+                                android:textColor="@color/textPrimary" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <TextView
+                                android:id="@+id/tv_email_us"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_email_24"
+                                android:drawablePadding="16dp"
+                                app:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="Email Customer Service"
+                                android:textColor="@color/textPrimary" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 6. USER FEEDBACK -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="USER FEEDBACK"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_send_feedback"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_feedback_24"
+                                android:drawablePadding="16dp"
+                                app:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="Share App Feedback"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 7. ACCOUNT ACTIONS -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_logout"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Sign Out"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorError"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:icon="@drawable/baseline_logout_24"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/colorError" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_delete_account"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Delete My Account"
+                        android:textAllCaps="false"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <!-- Extra Padding for bottom nav -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="bottom"
+        android:background="@color/surface"
+        app:elevation="16dp"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemRippleColor="@color/colorPrimaryLight"
+        app:itemActiveIndicatorStyle="@style/ShapeAppearance.Material3.Corner.Full"
+        app:labelVisibilityMode="labeled"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

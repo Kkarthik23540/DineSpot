@@ -1,6 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+}
+
+secrets {
+    // Optionally configure the plugin
+    defaultPropertiesFileName = "local.properties"
 }
 
 android {
@@ -17,7 +23,17 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
+        getByName("debug") {
+            buildConfigField("String", "RAZORPAY_KEY_ID", "\"rzp_test_THNrx21lyjVEE6\"")
+        }
+        getByName("release") {
+            buildConfigField("String", "RAZORPAY_KEY_ID", "\"rzp_test_THNrx21lyjVEE6\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -33,33 +49,39 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.swiperefreshlayout)
+    
+    // Firebase dependencies using version catalog
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
+    implementation(libs.play.services.location)
+    implementation(libs.playServicesAuthLib)
+    implementation(libs.gmsBase)
+    
+    // Other Firebase / Google services
+    implementation(libs.firebase.storage)
+    implementation(libs.play.services.maps)
+
+    // Image loading
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+    implementation(libs.picasso)
+
+    // Payment
+    implementation(libs.checkout)
+
+    // Charts
+    implementation(libs.mpandroidchart)
+    implementation(libs.shimmer)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("com.google.firebase:firebase-auth:23.1.0")
-
-    implementation(platform("com.google.firebase:firebase-bom:32.0.0"))
-
-
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
-    implementation ("com.google.firebase:firebase-auth:21.1.0")
-    implementation ("com.google.firebase:firebase-core:21.0.0")
-    implementation ("com.google.firebase:firebase-firestore:24.0.3")
-    implementation ("com.google.firebase:firebase-database:20.0.6")
-    implementation ("com.google.firebase:firebase-storage:20.1.0")
-    implementation ("com.squareup.picasso:picasso:2.71828")
-    implementation ("com.google.firebase:firebase-database:20.3.0")
-    implementation ("com.razorpay:checkout:1.6.21")
-    implementation ("com.google.android.gms:play-services-maps:18.1.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
 }
-apply (plugin="com.google.gms.google-services")

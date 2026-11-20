@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".AdminFeedbackActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:liftOnScroll="false"
+        app:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Customer Feedback"
+            app:titleTextColor="@color/white"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:navigationIconTint="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/searchCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_menu_search"
+                    app:tint="@color/colorPrimary" />
+
+                <EditText
+                    android:id="@+id/searchBar"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="Search by name or content..."
+                    android:inputType="text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Rating Filter Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="12dp"
+            android:weightSum="4"
+            android:background="@color/colorPrimary">
+
+            <!-- All -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_all"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="0.8"
+                android:layout_marginHorizontal="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/white"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white">
+                <TextView
+                    android:id="@+id/tv_filter_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="All"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 5 Star -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_5"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1.0"
+                android:layout_marginHorizontal="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#4DFFFFFF"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@android:color/transparent">
+                <TextView
+                    android:id="@+id/tv_filter_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="5 Star"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 4+ Star -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_4"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1.0"
+                android:layout_marginHorizontal="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#4DFFFFFF"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@android:color/transparent">
+                <TextView
+                    android:id="@+id/tv_filter_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="4+ Star"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 3+ Star -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_3"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1.2"
+                android:layout_marginHorizontal="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#4DFFFFFF"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@android:color/transparent">
+                <TextView
+                    android:id="@+id/tv_filter_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="3+ Below"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_feedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="32dp" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_view_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible"
+                    app:shimmer_auto_start="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Feedback Item Skeletons -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginVertical="8dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="1dp"
+                            app:strokeColor="@color/divider">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="20dp">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <View android:layout_width="150dp" android:layout_height="22dp" android:background="#EEEEEE" />
+                                    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+                                    <View android:layout_width="70dp" android:layout_height="22dp" android:background="#DDDDDD" />
+                                </LinearLayout>
+                                <View android:layout_width="120dp" android:layout_height="14dp" android:layout_marginTop="8dp" android:background="#EEEEEE" />
+                                <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="16dp" android:background="@color/divider" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <View android:layout_width="20dp" android:layout_height="20dp" android:background="#DDDDDD" />
+                                    <View android:layout_width="180dp" android:layout_height="16dp" android:layout_marginStart="8dp" android:background="#EEEEEE" />
+                                    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+                                    <View android:layout_width="36dp" android:layout_height="36dp" android:background="#F5F5F5" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginVertical="8dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="1dp"
+                            app:strokeColor="@color/divider">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="20dp">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <View android:layout_width="150dp" android:layout_height="22dp" android:background="#EEEEEE" />
+                                    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+                                    <View android:layout_width="70dp" android:layout_height="22dp" android:background="#DDDDDD" />
+                                </LinearLayout>
+                                <View android:layout_width="120dp" android:layout_height="14dp" android:layout_marginTop="8dp" android:background="#EEEEEE" />
+                                <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="16dp" android:background="@color/divider" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <View android:layout_width="20dp" android:layout_height="20dp" android:background="#DDDDDD" />
+                                    <View android:layout_width="180dp" android:layout_height="16dp" android:layout_marginStart="8dp" android:background="#EEEEEE" />
+                                    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+                                    <View android:layout_width="36dp" android:layout_height="36dp" android:background="#F5F5F5" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/tv_no_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:src="@drawable/baseline_feedback_24"
+                        android:alpha="0.2"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="No feedback found."
+                        android:textColor="@color/textPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Try searching for something else or wait for new reviews."
+                        android:textColor="@color/textSecondary"
+                        android:gravity="center"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </FrameLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

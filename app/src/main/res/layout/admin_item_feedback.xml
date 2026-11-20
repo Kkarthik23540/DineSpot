@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_feedback_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_feedback_userid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/tv_feedback_name"
+                android:background="@drawable/rounded_status_bg"
+                android:backgroundTint="@color/colorPrimaryLight"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:text="ID: DS-USER-01"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_feedback_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_feedback_name"
+                android:layout_marginTop="2dp"
+                android:text="user@example.com"
+                android:textColor="@color/textSecondary"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_feedback_timestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="2023-10-27"
+                android:textColor="@color/textTertiary"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <!-- New Rating Display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_status_bg"
+            android:backgroundTint="#F5F5F5"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp">
+            <TextView
+                android:id="@+id/tv_item_rating_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🙂"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tv_item_rating_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Happy"
+                android:textColor="@color/textSecondary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_feedback_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Feedback content goes here..."
+            android:textColor="@color/textPrimary"
+            android:textSize="15sp"
+            android:lineSpacingExtra="2dp"/>
+
+        <!-- Admin Reply Section (Hidden buttons below) -->
+        <LinearLayout
+            android:id="@+id/layout_admin_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@color/colorLightBackground"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admin Reply"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_admin_reply_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Thank you for your feedback!"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                android:fontStyle="italic"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

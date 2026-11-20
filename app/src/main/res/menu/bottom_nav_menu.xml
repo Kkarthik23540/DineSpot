@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_home"
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
         android:icon="@drawable/baseline_home_24"
-        android:title="Home"/>
-    <item android:id="@+id/menu_restaurants"
+        android:title="Home" />
+    <item
+        android:id="@+id/menu_bookings"
         android:icon="@drawable/baseline_restaurant_menu_24"
-        android:title="Restaurants"/>
-    <item android:id="@+id/menu_cart"
+        android:title="Bookings" />
+    <item
+        android:id="@+id/menu_cart"
         android:icon="@drawable/baseline_shopping_cart_24"
-        android:title="Cart"/>
-
-    <item android:id="@+id/menu_profile"
-        android:icon="@drawable/baseline_home_24"
-        android:title="profile"
-        />
+        android:title="My Cart" />
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="Profile" />
 </menu>

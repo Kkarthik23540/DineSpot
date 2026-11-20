@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "1072182836759-58ipbags6cunmbdise61ffdkhrl36f16.apps.googleusercontent.com",
+          "client_id": "1072182836759-8mhhss0t33lug78rqm1mr1m3u86aa150.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dinespot",
+            "certificate_hash": "83e6bfb568475e39df88be2341c3047c2c77e8a5"
+          }
+        },
+        {
+          "client_id": "1072182836759-vp486nld0a0m3geps2d68ls9fqsjck8h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".AdminAnalyticsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:liftOnScroll="false"
+        app:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:title="System Analytics"
+            app:titleTextColor="@color/white"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:navigationIconTint="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <!-- Period Filter Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="12dp"
+            android:weightSum="3"
+            android:background="@color/colorPrimary">
+
+            <!-- Today -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_today"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="0.8"
+                android:layout_marginHorizontal="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/white"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/white">
+                <TextView
+                    android:id="@+id/tv_filter_today"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Today"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Weekly -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_weekly"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1.0"
+                android:layout_marginHorizontal="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#4DFFFFFF"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@android:color/transparent">
+                <TextView
+                    android:id="@+id/tv_filter_weekly"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Weekly"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Monthly -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filter_monthly"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1.0"
+                android:layout_marginHorizontal="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#4DFFFFFF"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@android:color/transparent">
+                <TextView
+                    android:id="@+id/tv_filter_monthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Monthly"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/analytics_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- 1. Premium Summary Card (Single Card, 4 Stats) -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginHorizontal="4dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp"
+                        app:strokeWidth="0dp">
+
+                        <GridLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:columnCount="2"
+                            android:rowCount="2"
+                            android:padding="8dp"
+                            android:background="@color/surface">
+
+                            <!-- Users -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:gravity="center"
+                                android:padding="16dp"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="22dp"
+                                    android:layout_height="22dp"
+                                    android:src="@drawable/baseline_account_circle_24"
+                                    app:tint="@color/colorPrimary" />
+                                <TextView
+                                    android:id="@+id/tvUsersVal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="0"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="TOTAL USERS"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <!-- Restaurants -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:gravity="center"
+                                android:padding="16dp"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="22dp"
+                                    android:layout_height="22dp"
+                                    android:src="@drawable/baseline_restaurant_menu_24"
+                                    app:tint="@color/colorPrimary" />
+                                <TextView
+                                    android:id="@+id/tvResVal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="0"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="RESTAURANTS"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <!-- Bookings -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:gravity="center"
+                                android:padding="16dp"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="22dp"
+                                    android:layout_height="22dp"
+                                    android:src="@drawable/baseline_done_24"
+                                    app:tint="@color/colorSuccess" />
+                                <TextView
+                                    android:id="@+id/tvBookVal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="0"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="TOTAL BOOKINGS"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <!-- Feedback -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:gravity="center"
+                                android:padding="16dp"
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="22dp"
+                                    android:layout_height="22dp"
+                                    android:src="@drawable/baseline_feedback_24"
+                                    app:tint="@color/colorAccent" />
+                                <TextView
+                                    android:id="@+id/tvFeedVal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="0"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="USER REVIEWS"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="9sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </GridLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 2. Trends Graph -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginHorizontal="4dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="24dp"
+                            android:background="@color/surface">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:text="Performance Graph"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorPrimary" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnFilterRange"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:text="Last 7 Days"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="12sp"
+                                    app:icon="@drawable/ic_chevron_down"
+                                    app:iconGravity="end"
+                                    app:iconSize="14dp"
+                                    app:iconTint="@color/textSecondary" />
+                            </RelativeLayout>
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/lineChart"
+                                android:layout_width="match_parent"
+                                android:layout_height="250dp" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 3. Best Sellers & Peak Hours (Side by Side or Vertical) -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Popularity Insights"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
+
+                        <!-- Best Sellers Card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="6dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="2dp"
+                            app:strokeWidth="0dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp"
+                                android:background="@color/surface">
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/baseline_restaurant_menu_24"
+                                    app:tint="@color/colorAccent" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="Best Sellers"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/tvBestSeller1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="Loading..."
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold"
+                                    android:maxLines="1"
+                                    android:ellipsize="end" />
+                                <TextView
+                                    android:id="@+id/tvBestSeller2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text=""
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Peak Hours Card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="6dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="2dp"
+                            app:strokeWidth="0dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp"
+                                android:background="@color/surface">
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/baseline_schedule_24"
+                                    app:tint="@color/colorPrimary" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="Peak Hours"
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/tvPeakTime"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="Calculating..."
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/tvPeakDay"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text=""
+                                    android:textColor="@color/textSecondary"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <!-- Padding for bottom nav -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/analytics_skeleton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:shimmer_auto_start="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Summary Card Skeleton -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+                        <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="#F5F5F5" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Graph Skeleton -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_marginTop="20dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+                        <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="#F5F5F5" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="bottom"
+        android:background="@color/surface"
+        app:elevation="16dp"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemRippleColor="@color/colorPrimaryLight"
+        app:itemActiveIndicatorStyle="@style/ShapeAppearance.Material3.Corner.Full"
+        app:labelVisibilityMode="labeled"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        app:menu="@menu/admin_bottom_menu" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

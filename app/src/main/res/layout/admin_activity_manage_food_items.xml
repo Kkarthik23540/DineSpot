@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".AdminManageFoodItemsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:liftOnScroll="false"
+        app:elevation="4dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/colorPrimary"
+            app:statusBarScrim="@color/colorPrimary"
+            app:titleEnabled="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="64dp"
+                android:paddingBottom="16dp"
+                app:layout_collapseMode="parallax">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_search"
+                            app:tint="@color/colorPrimary"
+                            android:contentDescription="Search Icon" />
+
+                        <EditText
+                            android:id="@+id/etSearchFood"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:hint="Search menu items..."
+                            android:inputType="text"
+                            android:textSize="15sp"
+                            android:importantForAutofill="no" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:title="Manage Menu"
+                app:titleTextColor="@color/white"
+                app:navigationIcon="@drawable/baseline_arrow_back_24"
+                app:navigationIconTint="@color/white"
+                app:layout_collapseMode="pin"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <!-- STICKY Area (Dietary Filters) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="vertical"
+            android:paddingBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="12dp"
+                android:weightSum="3">
+
+                <!-- All -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/filter_all"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="0.8"
+                    android:layout_marginHorizontal="4dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="1.5dp"
+                    app:cardBackgroundColor="@color/colorPrimaryLight"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="All"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Veg -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/filter_veg"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1.1"
+                    android:layout_marginHorizontal="4dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/divider"
+                    app:strokeWidth="1dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Vegetarian"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Non-Veg -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/filter_non_veg"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1.1"
+                    android:layout_marginHorizontal="4dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/divider"
+                    app:strokeWidth="1dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Non-Veg"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewFoodItems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingVertical="12dp"
+                android:paddingBottom="100dp" />
+
+            <TextView
+                android:id="@+id/noResultsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:gravity="center"
+                android:padding="24dp"
+                android:text="No food items found matching your filters."
+                android:textColor="@color/textSecondary"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:shimmer_auto_start="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Simplified Skeletons -->
+                    <View android:layout_width="match_parent" android:layout_height="100dp" android:layout_margin="12dp" android:background="#EEEEEE" />
+                    <View android:layout_width="match_parent" android:layout_height="100dp" android:layout_marginHorizontal="12dp" android:background="#EEEEEE" />
+                    <View android:layout_width="match_parent" android:layout_height="100dp" android:layout_margin="12dp" android:background="#EEEEEE" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <LinearLayout
+                android:id="@+id/llNoFoodItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/baseline_restaurant_menu_24"
+                    android:alpha="0.2"
+                    app:tint="@color/textSecondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Your menu is empty"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Tap '+' to start building your menu"
+                    android:textColor="@color/textTertiary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddFoodItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/baseline_add_24"
+        app:tint="@color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#14B8CC</color> <!-- Lighter Cyan for dark background -->
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryLight">#1A2E2F</color> <!-- Darker version of Cyan-grey -->
+    <color name="colorAccent">#FF7070</color>
+
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#B0B0B0</color>
+    <color name="textTertiary">#808080</color>
+
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="divider">#2C2C2C</color>
+
+    <color name="colorSuccess">#81C784</color>
+    <color name="colorError">#E57373</color>
+    <color name="colorWarning">#FFD54F</color>
+
+    <color name="positive_button_color">#81C784</color>
+    <color name="negative_button_color">#E57373</color>
+    <color name="buttonColor">#14B8CC</color>
+    <color name="checkboxColor">#14B8CC</color>
+    <color name="colorLightBackground">#1F1F1F</color>
+</resources>

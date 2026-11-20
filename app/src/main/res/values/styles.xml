@@ -3,4 +3,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item> <!-- This makes it a circle -->
     </style>
+
+    <style name="TextAppearance.Design.CollapsingToolbar.Expanded.Empty" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:textSize">0sp</item>
+    </style>
 </resources>

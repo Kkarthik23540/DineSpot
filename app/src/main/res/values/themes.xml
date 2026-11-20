@@ -2,43 +2,51 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.DineSpot" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="colorOnBackground">@color/textPrimary</item>
 
-        <item name="colorPrimary">#118D9D</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+
+        <!-- Global Font -->
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
     </style>
 
     <style name="Theme.DineSpot" parent="Base.Theme.DineSpot" />
-        <!-- Primary color -->
-        <color name="colorPrimary">#118D9D</color>
 
-        <!-- Primary Dark color -->
-        <color name="colorPrimaryDark">#0E6A6A</color>
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
 
-        <!-- Accent color -->
-        <color name="colorAccent">#FDCB82</color>
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
-        <!-- Background color -->
-        <color name="colorBackground">#FFFFFF</color>
+    <style name="ShapeAppearanceOverlay.App.Card.TopRounded" parent="">
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
 
-        <!-- Text colors -->
-        <color name="textPrimaryColor">#212121</color>
-        <color name="textSecondaryColor">#757575</color>
+    <style name="ShapeAppearance.Sent" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">4dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+    </style>
 
-        <!-- Button colors -->
-        <color name="buttonColor">#FDCB82</color>
-
-        <!-- Checkbox tick color -->
-        <color name="checkboxColor">#118D9D</color>
-
-        <!-- Error color -->
-        <color name="colorError">#F44336</color>
-
-        <!-- Success color -->
-        <color name="colorSuccess">#4CAF50</color>
-
-        <!-- Card view background -->
-        <color name="cardview_dark_background">#2F4F4F</color>
-
-        <!-- Light background -->
-        <color name="colorLightBackground">#F0F0F0</color>
-
+    <style name="ShapeAppearance.Received" parent="">
+        <item name="cornerSizeTopLeft">4dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+    </style>
 </resources>

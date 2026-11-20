@@ -2,7 +2,26 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="positive_button_color">#4CAF50</color> <!-- Example: Green -->
-    <color name="negative_button_color">#F44336</color> <!-- Example: Red -->
+    <color name="colorPrimary">#118D9D</color>
+    <color name="colorPrimaryDark">#0E6A6A</color>
+    <color name="colorPrimaryLight">#E0F2F1</color>
+    <color name="colorAccent">#FF5252</color>
 
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="textTertiary">#BDBDBD</color>
+
+    <color name="background">#F5F7F8</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="divider">#EEEEEE</color>
+
+    <color name="colorSuccess">#4CAF50</color>
+    <color name="colorError">#F44336</color>
+    <color name="colorWarning">#FFC107</color>
+
+    <color name="positive_button_color">#4CAF50</color>
+    <color name="negative_button_color">#F44336</color>
+    <color name="buttonColor">#118D9D</color>
+    <color name="checkboxColor">#118D9D</color>
+    <color name="colorLightBackground">#F0F0F0</color>
 </resources>

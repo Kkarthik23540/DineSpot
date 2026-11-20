@@ -5,44 +5,67 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
     <queries>
+        <package android:name="com.google.android.gms" />
+        <package android:name="com.android.vending" />
         <package android:name="com.google.android.apps.nbu.paisa.user"/>
-        <package android:name="com.example.dinespot"/>
+        <package android:name="com.google.android.apps.maps" />
         <intent>
             <action android:name="android.intent.action.SEND"/>
         </intent>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
     </queries>
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/dine_spot"
+        android:icon="@mipmap/dine_spot_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/dine_spot_round"
+        android:roundIcon="@mipmap/dine_spot_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DineSpot"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
-        <meta-data android:name="com.google.geo.API_KEY"
-            android:value="AIzaSyBDpzsDL_6nIBZ4rsOxfELLtC_U187U268"/>
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}"/>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".UserWelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <receiver android:name="com.razorpay.RzpTokenReceiver"
             android:exported="false">
@@ -51,10 +74,10 @@
             </intent-filter>
         </receiver>
 
-
         <activity android:name="com.razorpay.CheckoutActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:exported="true"
+            tools:replace="android:exported"
             android:theme="@style/CheckoutTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -64,26 +87,50 @@
         </activity>
 
         <!-- users -->
-
-        <activity android:name="SignUpActivity"/>
-        <activity android:name=".ForgotPasswordActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".RestaurantsActivityMenu"/>
-        <activity android:name=".CartActivityMenu"/>
-        <activity android:name="ProfileActivityMenu"/>
-        <activity android:name=".RestaurantDetailsActivity"/>
-        <activity android:name=".OrderSummaryActivity"/>
-        <activity android:name=".PaymentSuccessActivity"/>
+        <activity android:name=".UserSignUpActivity"/>
+        <activity android:name=".UserForgotPasswordActivity"/>
+        <activity android:name=".UserLoginActivity"/>
+        <activity android:name=".UserHomeActivity"/>
+        <activity android:name=".UserCartActivity" />
+        <activity android:name=".UserProfileActivity"/>
+        <activity android:name=".UserRestaurantDetailsActivity"/>
+        <activity android:name=".UserOrderSummaryActivity"/>
+        <activity android:name=".UserPaymentSuccessActivity"/>
+        <activity android:name=".UserFeedbackActivity"/>
 
         <!-- admin -->
         <activity android:name=".AdminLoginActivity"/>
-        <activity android:name=".AdminSignupActivity"/>
         <activity android:name=".AdminDashboardActivity"/>
+        <activity android:name=".AdminProfileActivity"/>
+        <activity android:name=".AdminAnalyticsActivity"/>
+        <activity android:name=".AdminFeedbackActivity"/>
+        <activity android:name=".AdminManageRestaurantsActivity"/>
+        <activity android:name=".AdminAddEditRestaurantActivity"/>
+        <activity android:name=".AdminManageFoodItemsActivity"/>
+        <activity android:name=".AdminAddEditFoodItemActivity"/>
+        <activity android:name=".UserMapPickerActivity"/>
+        <activity android:name=".UserChatActivity"/>
+        <activity android:name=".UserBookingHistoryActivity"/>
+        <activity android:name=".UserUpdateEmailActivity"/>
 
+        <activity android:name=".CommonBothLoginActivity" />
+        <activity android:name=".AdminSupportInboxActivity" />
+        <activity android:name=".AdminFloorPlanActivity" />
+        <activity android:name=".AdminStaffManagementActivity" />
+        <activity android:name=".AdminAddStaffActivity" />
 
-        <activity android:name=".BothLogin"/>
+        <receiver android:name=".CommonNotificationReceiver"
+            android:exported="false" />
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.dinespot.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
     </application>
 

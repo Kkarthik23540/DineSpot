@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">DineSpot</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="default_web_client_id">1072182836759-vp486nld0a0m3geps2d68ls9fqsjck8h.apps.googleusercontent.com</string>
+    <string name="label_new_restaurant">New</string>
+    <string name="btn_check_in_table">Check-in for a Table</string>
 
         <string-array name="date_filter_options">
             <item>Today</item>
@@ -7,5 +12,8 @@
             <item>Specific Date</item>
         </string-array>
 
+    <string name="status_closed">Currently Closed</string>
+    <string name="status_join_waitlist">Join Waitlist</string>
+    <string name="status_check_in">Check-in for a Table</string>
 </resources>
 

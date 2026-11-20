@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".AdminProfileActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:elevation="0dp"
+        app:liftOnScroll="false">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Admin Profile"
+            app:titleTextColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_theme_toggle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_sun"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 1. SCROLLING HEADER SECTION (Teal Theme) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="32dp"
+                    android:paddingBottom="40dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="50dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/white"
+                        app:strokeWidth="2dp">
+
+                        <ImageView
+                            android:id="@+id/iv_admin_pic"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="20dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/baseline_account_circle_24"
+                            app:tint="@color/colorPrimary" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tv_admin_name_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Administrator"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_admin_email_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="admin@dinespot.com"
+                        android:textColor="#B2DFDB"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_admin_id_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/rounded_status_bg"
+                        android:backgroundTint="@color/colorPrimaryLight"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="4dp"
+                        android:text="Admin ID: DS-ADMIN-01"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- 2. STAFF INFORMATION -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="STAFF INFORMATION"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <!-- Name Field -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="16dp">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/baseline_account_circle_24"
+                                    app:tint="@color/colorPrimary" />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Full Name"
+                                        android:textColor="@color/textSecondary"
+                                        android:textSize="11sp" />
+                                    <EditText
+                                        android:id="@+id/etAdminName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:enabled="false"
+                                        android:inputType="textPersonName"
+                                        android:textColor="@color/textPrimary"
+                                        android:textSize="15sp" />
+                                </LinearLayout>
+                                <ImageButton
+                                    android:id="@+id/btn_edit_name"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:src="@drawable/baseline_edit_24"
+                                    app:tint="@color/textSecondary" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <!-- Phone Field -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="16dp">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/baseline_call_24"
+                                    app:tint="@color/colorPrimary" />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Contact Number"
+                                        android:textColor="@color/textSecondary"
+                                        android:textSize="11sp" />
+                                    <EditText
+                                        android:id="@+id/etAdminPhone"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:enabled="false"
+                                        android:inputType="phone"
+                                        android:textColor="@color/textPrimary"
+                                        android:textSize="15sp" />
+                                </LinearLayout>
+                                <ImageButton
+                                    android:id="@+id/btn_edit_phone"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:src="@drawable/baseline_edit_24"
+                                    app:tint="@color/textSecondary" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 3. MANAGEMENT SHORTCUTS -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="MANAGEMENT TOOLS"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_admin_reviews"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_star_24"
+                                android:drawablePadding="16dp"
+                                android:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="User Reviews &amp; Feedback"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <TextView
+                                android:id="@+id/tv_admin_support_inbox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_contact_support_24"
+                                android:drawablePadding="16dp"
+                                android:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="Global Support Inbox"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:id="@+id/divider_staff_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <TextView
+                                android:id="@+id/btnAuthorizeNewAdmin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_person_add_24"
+                                android:drawablePadding="16dp"
+                                android:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="Authorize New Admin"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:id="@+id/divider_staff_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <TextView
+                                android:id="@+id/btnManageStaff"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:drawableStart="@drawable/baseline_people_24"
+                                android:drawablePadding="16dp"
+                                android:drawableTint="@color/colorPrimary"
+                                android:focusable="true"
+                                android:padding="16dp"
+                                android:text="View Administrative Team"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- 4. ACCOUNT ACTIONS -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLogout"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Sign Out from Dashboard"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorError"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:icon="@drawable/baseline_logout_24"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/colorError" />
+
+                </LinearLayout>
+
+                <!-- Extra Padding for bottom -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="bottom"
+        android:background="@color/surface"
+        app:elevation="16dp"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemRippleColor="@color/colorPrimaryLight"
+        app:itemActiveIndicatorStyle="@style/ShapeAppearance.Material3.Corner.Full"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/admin_bottom_menu"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

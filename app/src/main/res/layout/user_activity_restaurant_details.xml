@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <!-- Scrollable Section: Image + Details -->
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="true"
+            app:title="Restaurant Details"
+            app:expandedTitleTextColor="@android:color/transparent"
+            app:collapsedTitleTextColor="@color/white"
+            app:statusBarScrim="@color/colorPrimaryDark">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp">
+                    <ViewFlipper
+                        android:id="@+id/image_flipper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:autoStart="false"
+                        android:flipInterval="3000">
+                        <ImageView
+                            android:id="@+id/restaurant_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/baseline_image_24" />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/fast_filling_bg" />
+                    </ViewFlipper>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#66000000" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:id="@+id/restaurant_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Restaurant Name"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            app:cardBackgroundColor="@color/colorLightBackground"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="0dp">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:paddingHorizontal="10dp">
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/baseline_star_24"
+                                    app:tint="@color/colorWarning" />
+                                <TextView
+                                    android:id="@+id/restaurant_rating"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:text="0.0"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/call_button"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="12dp"
+                            android:text="Call"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:paddingHorizontal="16dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            app:icon="@drawable/baseline_call_24"
+                            app:iconSize="14dp"
+                            app:iconTint="@color/colorPrimary" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/location_button"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="8dp"
+                            android:text="Directions"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:paddingHorizontal="16dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            app:icon="@drawable/baseline_directions_24"
+                            app:iconSize="14dp"
+                            app:iconTint="@color/colorPrimary" />
+                    </LinearLayout>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:cardBackgroundColor="@color/surface"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="1dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/divider">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="12dp"
+                            android:weightSum="4">
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2P" android:textSize="9sp" android:textStyle="bold" android:textColor="@color/textSecondary"/>
+                                <TextView android:id="@+id/tv_tables_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="14sp" android:textStyle="bold" android:textColor="@color/textPrimary"/>
+                            </LinearLayout>
+                            <View android:layout_width="1dp" android:layout_height="20dp" android:layout_gravity="center_vertical" android:background="@color/divider"/>
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4P" android:textSize="9sp" android:textStyle="bold" android:textColor="@color/textSecondary"/>
+                                <TextView android:id="@+id/tv_tables_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="14sp" android:textStyle="bold" android:textColor="@color/textPrimary"/>
+                            </LinearLayout>
+                            <View android:layout_width="1dp" android:layout_height="20dp" android:layout_gravity="center_vertical" android:background="@color/divider"/>
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="6P" android:textSize="9sp" android:textStyle="bold" android:textColor="@color/textSecondary"/>
+                                <TextView android:id="@+id/tv_tables_6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="14sp" android:textStyle="bold" android:textColor="@color/textPrimary"/>
+                            </LinearLayout>
+                            <View android:layout_width="1dp" android:layout_height="20dp" android:layout_gravity="center_vertical" android:background="@color/divider"/>
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10P" android:textSize="9sp" android:textStyle="bold" android:textColor="@color/textSecondary"/>
+                                <TextView android:id="@+id/tv_tables_10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="14sp" android:textStyle="bold" android:textColor="@color/textPrimary"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/baseline_arrow_back_24" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <!-- STICKY Area (Menu Controls) - No Scroll Flags ensures it stays pinned -->
+        <LinearLayout
+            android:id="@+id/layoutMenuFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="vertical"
+            android:paddingBottom="12dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFoodCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_search"
+                            app:tint="@color/colorPrimary" />
+
+                        <EditText
+                            android:id="@+id/search_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="12dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Search menu..."
+                            android:inputType="text"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <View android:layout_width="8dp" android:layout_height="1dp" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleDietary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true"
+                    app:checkedButton="@+id/btnAllDietary">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAllDietary"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:padding="0dp"
+                        android:text="All"
+                        android:textSize="9sp"
+                        app:cornerRadius="8dp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnVegOnly"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:padding="0dp"
+                        android:text="Veg"
+                        android:textSize="9sp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnNonVegOnly"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:padding="0dp"
+                        android:text="Non"
+                        android:textSize="9sp"
+                        app:cornerRadius="8dp" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/details_content_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="100dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/select_table_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:text="Book Your Table"
+                                android:textAllCaps="false"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:cornerRadius="14dp" />
+                            <ProgressBar
+                                android:id="@+id/select_table_progress"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:elevation="4dp"
+                                android:indeterminateTint="@color/white"
+                                android:visibility="gone" />
+                        </FrameLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/cancel_booking_button"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Cancel Waitlist"
+                            android:textColor="@color/colorError"
+                            android:visibility="gone" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/booking_status_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:visibility="gone"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="16dp">
+                                <ProgressBar
+                                    android:id="@+id/booking_progress"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:indeterminateTint="@color/colorPrimary" />
+                                <TextView
+                                    android:id="@+id/tv_booking_status_msg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:text="Pending..."
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <!-- Menu List Area -->
+                    <LinearLayout
+                        android:id="@+id/menu_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvEmptyMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:gravity="center"
+                            android:text="No items found"
+                            android:textColor="@color/textSecondary"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/food_items_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:clipToPadding="false"
+                            android:nestedScrollingEnabled="false" />
+                    </LinearLayout>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/booking_required_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        app:cardBackgroundColor="@color/colorLightBackground"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="24dp">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/baseline_restaurant_menu_24"
+                                app:tint="@color/colorPrimary" />
+                            <TextView
+                                android:id="@+id/tv_booking_required_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Menu is Locked"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_booking_required_desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center"
+                                android:text="Check-in to your table to start ordering."
+                                android:textColor="@color/textSecondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/details_skeleton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="#EEEEEE" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!-- Floating Cart Summary Bar -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/layout_cart_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:visibility="gone"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="12dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tv_cart_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 Items"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:alpha="0.8" />
+                        <TextView
+                            android:id="@+id/tv_cart_total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹0"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_view_cart_summary"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Go to Cart"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:icon="@drawable/baseline_shopping_cart_24"
+                        app:iconTint="@color/white" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
