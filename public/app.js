@@ -1,5 +1,5 @@
 /**
- * DineSpot Web Application - Matching Android App Design & Logic
+ * DineSpot Complete Web Engine - Full Android App Pages & Navigation Replica
  */
 
 // Firebase Configuration from project google-services.json
@@ -19,16 +19,16 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const rtdb = firebase.database();
 
-// Global App State
+// Global State
 let currentUser = null;
 let currentRole = 'user'; // 'user' or 'admin'
-let cart = [];
 let activeRestaurant = null;
+let cart = [];
 let restaurants = [];
 let foodItems = [];
 let bookings = [];
 
-// Initial Seed Data
+// Initial Sample Data for Firestore
 const sampleRestaurants = [
   {
     name: "La Bella Italia",
@@ -40,8 +40,7 @@ const sampleRestaurants = [
     phoneNumber: "+91 9876543210",
     openingTime: "11:00 AM",
     closingTime: "11:00 PM",
-    status: "Open",
-    tableTypes: { "2": 4, "4": 4, "6": 2, "10": 2 }
+    status: "Open"
   },
   {
     name: "Royal Spice Indian Bistro",
@@ -53,8 +52,7 @@ const sampleRestaurants = [
     phoneNumber: "+91 9876543211",
     openingTime: "12:00 PM",
     closingTime: "11:30 PM",
-    status: "Open",
-    tableTypes: { "2": 5, "4": 5, "6": 3, "10": 2 }
+    status: "Open"
   },
   {
     name: "Urban Burger & Brew",
@@ -66,8 +64,7 @@ const sampleRestaurants = [
     phoneNumber: "+91 9876543212",
     openingTime: "10:00 AM",
     closingTime: "10:00 PM",
-    status: "Open",
-    tableTypes: { "2": 3, "4": 4, "6": 2, "10": 1 }
+    status: "Open"
   }
 ];
 
@@ -87,48 +84,98 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchBookings();
 });
 
+// Single Page View Router
+function navigateTo(viewId) {
+  document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+  const target = document.getElementById(viewId);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Hide header and bottom nav on Welcome & Login screens
+  const header = document.getElementById('mainHeader');
+  const filterBar = document.getElementById('mainFilterBar');
+  const bottomNav = document.getElementById('mainBottomNav');
+
+  if (viewId === 'viewWelcome' || viewId === 'viewLogin' || viewId === 'viewSignUp' || viewId === 'viewForgotPassword') {
+    if (header) header.style.display = 'none';
+    if (filterBar) filterBar.style.display = 'none';
+    if (bottomNav) bottomNav.style.display = 'none';
+  } else {
+    if (header) header.style.display = 'block';
+    if (filterBar) filterBar.style.display = 'block';
+    if (bottomNav) bottomNav.style.display = 'flex';
+  }
+}
+
 function setupEventListeners() {
   document.getElementById('roleToggleBtn')?.addEventListener('click', toggleRole);
   document.getElementById('searchInput')?.addEventListener('input', handleSearch);
-  document.getElementById('checkoutBtn')?.addEventListener('click', initiateCheckout);
 }
 
 function listenToAuth() {
   auth.onAuthStateChanged(user => {
     currentUser = user;
-    const authBtn = document.getElementById('authNavBtn');
-    if (authBtn) {
-      if (user) {
-        authBtn.querySelector('span').innerText = user.email.split('@')[0];
-      } else {
-        authBtn.querySelector('span').innerText = 'Account';
-      }
+    if (user) {
+      document.getElementById('profileEmail').innerText = user.email;
+      document.getElementById('profileName').innerText = user.displayName || user.email.split('@')[0];
+    } else {
+      document.getElementById('profileEmail').innerText = 'guest@dinespot.com';
+      document.getElementById('profileName').innerText = 'Guest Diner';
     }
   });
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => navigateTo('viewHome'))
+    .catch(err => alert("Login Error: " + err.message));
+}
+
+function handleSignUp(e) {
+  e.preventDefault();
+  const name = document.getElementById('signUpName').value;
+  const email = document.getElementById('signUpEmail').value;
+  const password = document.getElementById('signUpPassword').value;
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(res => {
+      res.user.updateProfile({ displayName: name });
+      alert("Account created successfully!");
+      navigateTo('viewHome');
+    })
+    .catch(err => alert("Sign Up Error: " + err.message));
+}
+
+function handleForgotPassword(e) {
+  e.preventDefault();
+  const email = document.getElementById('forgotEmail').value;
+  auth.sendPasswordResetEmail(email)
+    .then(() => alert("Reset password email sent!"))
+    .catch(err => alert("Error: " + err.message));
 }
 
 function toggleRole() {
   currentRole = currentRole === 'user' ? 'admin' : 'user';
   const roleBtn = document.getElementById('roleToggleBtn');
-  const userPortal = document.getElementById('userPortal');
-  const adminPortal = document.getElementById('adminPortal');
-  const userFilter = document.getElementById('userFilterBar');
-  const adminFilter = document.getElementById('adminFilterBar');
 
   if (currentRole === 'admin') {
     roleBtn.innerHTML = `<i class="fas fa-user-shield"></i> Switch to Diner Portal`;
-    userPortal.style.display = 'none';
-    adminPortal.style.display = 'block';
-    userFilter.style.display = 'none';
-    adminFilter.style.display = 'flex';
+    document.getElementById('userFilterBar').style.display = 'none';
+    document.getElementById('adminFilterBar').style.display = 'flex';
     renderAdminDashboard();
+    navigateTo('viewAdminDashboard');
   } else {
     roleBtn.innerHTML = `<i class="fas fa-store"></i> Switch to Admin Portal`;
-    userPortal.style.display = 'block';
-    adminPortal.style.display = 'none';
-    userFilter.style.display = 'flex';
-    adminFilter.style.display = 'none';
+    document.getElementById('userFilterBar').style.display = 'flex';
+    document.getElementById('adminFilterBar').style.display = 'none';
     renderRestaurants(restaurants);
+    navigateTo('viewHome');
   }
 }
 
@@ -174,6 +221,7 @@ async function fetchBookings() {
   try {
     const snapshot = await db.collection('bookings').get();
     bookings = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    renderBookingHistory();
   } catch (e) {
     bookings = [];
   }
@@ -182,11 +230,6 @@ async function fetchBookings() {
 function renderRestaurants(list) {
   const container = document.getElementById('restaurantGrid');
   if (!container) return;
-
-  if (list.length === 0) {
-    container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">No restaurants found.</p>`;
-    return;
-  }
 
   container.innerHTML = list.map(r => `
     <div class="card" onclick="openRestaurantDetails('${r.id}')">
@@ -225,57 +268,71 @@ function renderNearbyRestaurants(list) {
   `).join('');
 }
 
-function filterCategory(cat, element) {
-  document.querySelectorAll('#userFilterBar .chip').forEach(c => c.classList.remove('active'));
-  element.classList.add('active');
-
-  if (cat === 'All') {
-    renderRestaurants(restaurants);
-  } else {
-    const filtered = restaurants.filter(r => r.category === cat);
-    renderRestaurants(filtered);
-  }
-}
-
-function handleSearch(e) {
-  const query = e.target.value.toLowerCase();
-  const filtered = restaurants.filter(r =>
-    r.name.toLowerCase().includes(query) ||
-    (r.category && r.category.toLowerCase().includes(query)) ||
-    r.address.toLowerCase().includes(query)
-  );
-  renderRestaurants(filtered);
-}
-
 function openRestaurantDetails(resId) {
   activeRestaurant = restaurants.find(r => r.id === resId);
   if (!activeRestaurant) return;
 
-  const modal = document.getElementById('restaurantModal');
+  document.getElementById('detailsResName').innerText = activeRestaurant.name;
+  document.getElementById('detailsResAddress').innerText = activeRestaurant.address;
+  document.getElementById('detailsResCategory').innerText = activeRestaurant.category || 'Multi-Cuisine';
+  document.getElementById('detailsResRating').innerText = activeRestaurant.rating || '4.8';
+  document.getElementById('detailsResHours').innerText = `${activeRestaurant.openingTime || '11 AM'} - ${activeRestaurant.closingTime || '11 PM'}`;
+  document.getElementById('detailsResPhone').innerText = activeRestaurant.phoneNumber || '+91 9876543210';
+  document.getElementById('detailsResBanner').src = activeRestaurant.imageUrl;
+
   const items = foodItems.filter(f => f.restaurantId === resId || !f.restaurantId);
+  const menuList = document.getElementById('detailsMenuList');
 
-  document.getElementById('modalResName').innerText = activeRestaurant.name;
-  document.getElementById('modalResAddress').innerText = activeRestaurant.address;
-
-  const menuContainer = document.getElementById('modalMenuGrid');
-  menuContainer.innerHTML = items.map(item => `
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--divider);">
+  menuList.innerHTML = items.map(item => `
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--divider);">
       <div style="display: flex; gap: 0.8rem; align-items: center;">
-        <img src="${item.imageUrl}" style="width: 50px; height: 50px; border-radius: 10px; object-fit: cover;">
+        <img src="${item.imageUrl}" style="width: 60px; height: 60px; border-radius: 12px; object-fit: cover;">
         <div>
-          <div style="font-weight: 700; font-size: 0.9rem;">${item.name} ${item.veg ? '🟢' : '🔴'}</div>
-          <div style="color: var(--primary); font-weight: 700; font-size: 0.85rem;">₹${item.price}</div>
+          <div style="font-weight: 700; font-size: 0.95rem;">${item.name} ${item.veg ? '🟢' : '🔴'}</div>
+          <div style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">₹${item.price}</div>
         </div>
       </div>
-      <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="addToCart('${item.id}')">+ Add</button>
+      <button class="btn btn-primary" style="padding: 0.4rem 0.9rem; font-size: 0.85rem;" onclick="addToCart('${item.id}')">+ Add</button>
     </div>
   `).join('');
 
-  modal.classList.add('active');
+  navigateTo('viewRestaurantDetails');
 }
 
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.remove('active');
+function submitTableBooking() {
+  const date = document.getElementById('bookingDate').value;
+  const timeSlot = document.getElementById('bookingTimeSlot').value;
+  const seating = document.getElementById('bookingSeating').value;
+  const requests = document.getElementById('bookingRequests').value;
+
+  if (!date || !timeSlot) {
+    alert("Please select a date and time slot for your table reservation.");
+    return;
+  }
+
+  const newBooking = {
+    restaurantName: activeRestaurant ? activeRestaurant.name : "La Bella Italia",
+    restaurantId: activeRestaurant ? activeRestaurant.id : "res_0",
+    userId: currentUser ? currentUser.uid : "guest_user",
+    userName: currentUser ? currentUser.displayName || currentUser.email.split('@')[0] : "Guest Diner",
+    phoneNumber: "+91 9876543210",
+    dateTime: date,
+    timeSlot: timeSlot,
+    tableType: seating,
+    specialRequests: requests,
+    status: "Pending",
+    orderedItems: cart.map(i => ({ name: i.name, price: i.price, quantity: i.quantity }))
+  };
+
+  db.collection('bookings').add(newBooking).then(docRef => {
+    bookings.push({ id: docRef.id, ...newBooking });
+    alert("Table Booking Request Submitted Successfully!");
+    navigateTo('viewBookingHistory');
+  }).catch(() => {
+    bookings.push({ id: `book_${Date.now()}`, ...newBooking });
+    alert("Table Booking Request Submitted!");
+    navigateTo('viewBookingHistory');
+  });
 }
 
 function addToCart(foodId) {
@@ -290,7 +347,7 @@ function addToCart(foodId) {
   }
 
   updateCartUI();
-  toggleCartDrawer(true);
+  alert(`Added ${item.name} to Cart!`);
 }
 
 function updateCartUI() {
@@ -298,7 +355,7 @@ function updateCartUI() {
   if (!cartList) return;
 
   if (cart.length === 0) {
-    cartList.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Your cart is empty.</p>`;
+    cartList.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 2rem;">Your cart is empty.</p>`;
     document.getElementById('cartSubtotal').innerText = "₹0";
     document.getElementById('cartTotal').innerText = "₹0";
     return;
@@ -336,18 +393,9 @@ function changeQuantity(id, delta) {
   updateCartUI();
 }
 
-function toggleCartDrawer(forceOpen) {
-  const drawer = document.getElementById('cartDrawer');
-  if (forceOpen === true) {
-    drawer.classList.add('active');
-  } else {
-    drawer.classList.toggle('active');
-  }
-}
-
 function initiateCheckout() {
   if (cart.length === 0) {
-    alert("Cart is empty!");
+    alert("Cart is empty! Please add food items first.");
     return;
   }
 
@@ -362,8 +410,11 @@ function initiateCheckout() {
     description: "Table Reservation & Food Payment",
     image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=100&q=80",
     handler: function (response) {
-      alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-      saveOrderToFirestore(response.razorpay_payment_id);
+      document.getElementById('successPaymentId').innerText = response.razorpay_payment_id;
+      document.getElementById('successOrderId').innerText = "DS_" + Math.floor(Math.random() * 899999 + 100000);
+      cart = [];
+      updateCartUI();
+      navigateTo('viewPaymentSuccess');
     },
     prefill: {
       name: currentUser ? currentUser.email.split('@')[0] : "Guest Diner",
@@ -379,31 +430,49 @@ function initiateCheckout() {
   rzp.open();
 }
 
-async function saveOrderToFirestore(paymentId) {
-  const newBooking = {
-    restaurantName: activeRestaurant ? activeRestaurant.name : "DineSpot Partner",
-    restaurantId: activeRestaurant ? activeRestaurant.id : "res_0",
-    userId: currentUser ? currentUser.uid : "guest_user",
-    userName: currentUser ? currentUser.email.split('@')[0] : "Guest Diner",
-    phoneNumber: "9876543210",
-    dateTime: new Date().toLocaleDateString(),
-    timeSlot: "07:30 PM",
-    tableType: "4 Seater",
-    status: "Accepted",
-    paymentId: paymentId,
-    orderedItems: cart.map(i => ({ name: i.name, price: i.price, quantity: i.quantity }))
-  };
+function renderBookingHistory() {
+  const container = document.getElementById('bookingHistoryList');
+  if (!container) return;
 
-  try {
-    const docRef = await db.collection('bookings').add(newBooking);
-    bookings.push({ id: docRef.id, ...newBooking });
-    cart = [];
-    updateCartUI();
-    toggleCartDrawer(false);
-    alert("Table Reservation & Food Order Confirmed!");
-  } catch (e) {
-    console.error("Error saving booking:", e);
+  if (bookings.length === 0) {
+    container.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No table reservations or past orders yet.</p>`;
+    return;
   }
+
+  container.innerHTML = bookings.map(b => `
+    <div class="card" style="padding: 1.2rem; margin-bottom: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <div style="font-weight: 700; font-size: 1.1rem; color: var(--primary);">${b.restaurantName || 'DineSpot Restaurant'}</div>
+        <span class="chip active" style="font-size: 0.75rem; padding: 0.2rem 0.6rem;">${b.status || 'Pending'}</span>
+      </div>
+      <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+        <i class="far fa-calendar-alt"></i> ${b.dateTime || 'Today'} &nbsp;|&nbsp; <i class="far fa-clock"></i> ${b.timeSlot || '07:30 PM'} &nbsp;|&nbsp; <i class="fas fa-chair"></i> ${b.tableType || '4 Seater'}
+      </div>
+      ${b.specialRequests ? `<div style="font-size: 0.8rem; background: var(--bg); padding: 0.4rem 0.8rem; border-radius: 8px; margin-bottom: 0.5rem;">Requests: "${b.specialRequests}"</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function filterCategory(cat, element) {
+  document.querySelectorAll('#userFilterBar .chip').forEach(c => c.classList.remove('active'));
+  element.classList.add('active');
+
+  if (cat === 'All') {
+    renderRestaurants(restaurants);
+  } else {
+    const filtered = restaurants.filter(r => r.category === cat);
+    renderRestaurants(filtered);
+  }
+}
+
+function handleSearch(e) {
+  const query = e.target.value.toLowerCase();
+  const filtered = restaurants.filter(r =>
+    r.name.toLowerCase().includes(query) ||
+    (r.category && r.category.toLowerCase().includes(query)) ||
+    r.address.toLowerCase().includes(query)
+  );
+  renderRestaurants(filtered);
 }
 
 function renderAdminDashboard() {
@@ -457,7 +526,7 @@ function renderAdminBookingsList() {
   if (!container) return;
 
   if (bookings.length === 0) {
-    container.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1rem;">No recent requests.</td></tr>`;
+    container.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1rem;">No active reservation requests.</td></tr>`;
     return;
   }
 
@@ -465,11 +534,11 @@ function renderAdminBookingsList() {
     <tr style="border-bottom: 1px solid var(--divider);">
       <td style="padding: 0.8rem; font-weight: 600;">${b.userName || 'Diner'}</td>
       <td style="padding: 0.8rem;">${b.restaurantName || 'DineSpot'}</td>
-      <td style="padding: 0.8rem;">${b.dateTime || 'Today'} (${b.timeSlot || '7 PM'})</td>
+      <td style="padding: 0.8rem;">${b.dateTime || 'Today'} (${b.timeSlot || '07:30 PM'})</td>
       <td style="padding: 0.8rem;">${b.tableType || '4-Seater'}</td>
-      <td style="padding: 0.8rem;"><span style="color: var(--success); font-weight: 700;">${b.status || 'Accepted'}</span></td>
+      <td style="padding: 0.8rem;"><span style="color: var(--success); font-weight: 700;">${b.status || 'Pending'}</span></td>
       <td style="padding: 0.8rem;">
-        <button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="alert('Completed')">Done</button>
+        <button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="alert('Booking Approved')">Approve</button>
       </td>
     </tr>
   `).join('');
@@ -488,7 +557,7 @@ function renderAnalyticsChart() {
     data: {
       labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       datasets: [{
-        label: 'Revenue Trends (₹)',
+        label: 'Weekly Revenue (₹)',
         data: [15000, 22000, 18000, 29000, 35000, 52000, 58000],
         borderColor: '#118D9D',
         backgroundColor: 'rgba(17, 141, 157, 0.1)',
@@ -505,18 +574,15 @@ function renderAnalyticsChart() {
   });
 }
 
-function scrollToSection(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-}
-
-function switchNavTab(tab) {
+function switchNavTab(tabName) {
   document.querySelectorAll('.bottom-nav .nav-tab').forEach(t => t.classList.remove('active'));
   event.currentTarget.classList.add('active');
-}
 
-function openChatModal() {
-  document.getElementById('chatModal').classList.add('active');
-  listenToLiveChat();
+  if (tabName === 'home') navigateTo('viewHome');
+  else if (tabName === 'cart') navigateTo('viewCart');
+  else if (tabName === 'history') navigateTo('viewBookingHistory');
+  else if (tabName === 'chat') navigateTo('viewUserChat');
+  else if (tabName === 'profile') navigateTo('viewUserProfile');
 }
 
 function listenToLiveChat() {
@@ -526,8 +592,10 @@ function listenToLiveChat() {
   chatRef.on('value', snapshot => {
     const data = snapshot.val();
     const chatContainer = document.getElementById('chatMessages');
+    if (!chatContainer) return;
+
     if (!data) {
-      chatContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 1rem;">Send a message to support...</p>`;
+      chatContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 1rem;">Send a message to start support chat...</p>`;
       return;
     }
 
@@ -564,11 +632,6 @@ function toggleTheme() {
   document.body.setAttribute('data-theme', newTheme);
 }
 
-function openAuthModal() {
-  const email = prompt("Enter email to Login/Sign Up:");
-  if (email) {
-    auth.signInWithEmailAndPassword(email, "password123").catch(() => {
-      auth.createUserWithEmailAndPassword(email, "password123").then(() => alert("Signed up!"));
-    });
-  }
+function logout() {
+  auth.signOut().then(() => navigateTo('viewWelcome'));
 }
